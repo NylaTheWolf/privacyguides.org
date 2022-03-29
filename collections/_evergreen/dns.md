@@ -14,7 +14,6 @@ Unencrypted DNS is able to be easily **surveilled** and **modified** in transit.
 Below we discuss what an outside observer may see using regular unencrypted DNS, and [encrypted dns](/dns/#what-is-encrypted-dns).
 
 ### Unencrypted DNS
-
 1. Using [`tshark`](https://www.wireshark.org/docs/man-pages/tshark.html) (part of the [Wireshark](https://en.wikipedia.org/wiki/Wireshark) project) we can monitor and record internet packet flow. This command will record packets that meet the rules specified:
    <pre class=terminal>tshark -w /tmp/dns.pcap udp port 53 and host 1.1.1.1 or host 8.8.8.8</pre>
 
@@ -48,7 +47,7 @@ Encrypted DNS can refer to one of a many different protocols, the ones below lik
 [**DNSCrypt**](https://en.wikipedia.org/wiki/DNSCrypt) is one of the first methods of encrypting DNS queries. The [protocol](https://en.wikipedia.org/wiki/DNSCrypt#Protocol) operated on [port 443](https://en.wikipedia.org/wiki/Well-known_ports) and worked in both [TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol) and [UDP](https://en.wikipedia.org/wiki/User_Datagram_Protocol) modes. DNSCrypt was never submitted to the [Internet Engineering Task Force](https://en.wikipedia.org/wiki/Internet_Engineering_Task_Force) nor did it go through the [Request for Comments](https://en.wikipedia.org/wiki/Request_for_Comments) process, so it was never widely used outside of a few [implementations](https://dnscrypt.info/implementations), and as a result it has been largely replaced by the more popular [DNS over HTTPS](/dns/#dns-over-https-doh).
 
 ### DNS over TLS (DoT)
-[**DNS over TLS (DoT)**](https://en.wikipedia.org/wiki/DNS_over_TLS) is another method for encrypting DNS communication that was defined in [RFC 7868](https://datatracker.ietf.org/doc/html/rfc7858). Support was first implemented in [Android 9](https://en.wikipedia.org/wiki/Android_Pie), [iOS 14](https://en.wikipedia.org/wiki/IOS_14) and on Linux in [systemd-resolved](https://www.freedesktop.org/software/systemd/man/resolved.conf.html#DNSOverTLS=) in version 237. Preference in the industry has been moving away from DoT to [DNS over HTTPS](/dns/#dns-over-https-doh) in recent years as DoT is a [complex protocol](https://dnscrypt.info/faq/) and has varying compliance to the RFC across the implementations that exist. DoT also operates on a dedicated port 853 and that can be blocked easily by restrictive firewalls.
+[**DNS over TLS (DoT)**](https://en.wikipedia.org/wiki/DNS_over_TLS) is another method for encrypting DNS communication that was defined in [RFC 7858](https://datatracker.ietf.org/doc/html/rfc7858). Support was first implemented in [Android 9](https://en.wikipedia.org/wiki/Android_Pie), [iOS 14](https://en.wikipedia.org/wiki/IOS_14) and on Linux in [systemd-resolved](https://www.freedesktop.org/software/systemd/man/resolved.conf.html#DNSOverTLS=) in version 237. Preference in the industry has been moving away from DoT to [DNS over HTTPS](/dns/#dns-over-https-doh) in recent years as DoT is a [complex protocol](https://dnscrypt.info/faq/) and has varying compliance to the RFC across the implementations that exist. DoT also operates on a dedicated port 853 and that can be blocked easily by restrictive firewalls.
 
 ### DNS over HTTPS (DoH)
 [**DNS over HTTPS**](https://en.wikipedia.org/wiki/DNS_over_HTTPS) as defined in [RFC 8484](https://datatracker.ietf.org/doc/html/rfc8484) packages queries in the [HTTP/2](https://en.wikipedia.org/wiki/HTTP/2) protocol and provides security with [HTTPS](https://en.wikipedia.org/wiki/HTTPS). Support was first added in web browsers such as [Firefox](https://support.mozilla.org/en-US/kb/firefox-dns-over-https) and [Chrome 83](https://blog.chromium.org/2020/05/a-safer-and-more-private-browsing-DoH.html).
@@ -147,7 +146,7 @@ We can simulate what a browser would do using the [`openssl`](https://en.wikiped
    </pre>
 
 4. Get the OCSP responder for the server certificate:
-   <pre class=terminal>openssl x509 -noout -ocsp_uri -in /tmp/pg_server.cert'</pre>
+   <pre class=terminal>openssl x509 -noout -ocsp_uri -in /tmp/pg_server.cert</pre>
 
    If we want to see all the details of the certificate we can use:
    <pre class=terminal>openssl x509 -text -noout -in /tmp/pg_server.cert</pre>
@@ -217,15 +216,13 @@ Windows users can [turn on DoH](https://docs.microsoft.com/en-us/windows-server/
 Select *Settings* &rarr; *Network & Internet* &rarr; *Ethernet* or *WiFi*, &rarr; *Edit DNS Settings* &rarr; Preferred DNS encryption &rarr; *Encrypted only (DNS over HTTPS)*.
 
 ### Linux
-`systemd-resolved` doesn't yet support [#8639](https://github.com/systemd/systemd/issues/8639), which many Linux distributions use to do their DNS lookups. This means you need to install a proxy like [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy) and [configure it](https://wiki.archlinux.org/title/Dnscrypt-proxy) to take all the DNS queries from your system resolver and forward them over HTTPS.
+`systemd-resolved` doesn't [yet support](https://github.com/systemd/systemd/issues/8639), which many Linux distributions use to do their DNS lookups. This means you need to install a proxy like [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy) and [configure it](https://wiki.archlinux.org/title/Dnscrypt-proxy) to take all the DNS queries from your system resolver and forward them over HTTPS.
 
 ## What is DNSSEC and when is it used?
-[Domain Name System Security Extensions (DNSSEC)](https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions) doesn't provide confidentiality as that is not it's purpose.
-
-The purpose of DNSSEC is to provide authenticity that the records from your DNS server are valid.
+[Domain Name System Security Extensions (DNSSEC)](https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions) is used to provide authenticity to the records being fetched from upstream DNS servers. It doesn't provide confidentiality, for that we use one of the [encrypted DNS](/dns#what-is-encrypted-dns) protocols discussed above.
 
 ## What is QNAME minimization?
-First, a QName is a "qualified name", simply put that would be `privacyguides.org`. QNAME minimisation reduces the amount of information sent from the DNS server to the [authoritive name server](https://en.wikipedia.org/wiki/Name_server#Authoritative_name_server).
+First, a QNAME is a "qualified name", simply put that would be `privacyguides.org`. QNAME minimisation reduces the amount of information sent from the DNS server to the [authoritive name server](https://en.wikipedia.org/wiki/Name_server#Authoritative_name_server).
 
 So rather than sending the actual domain `privacyguides.org`, it asks the server what all the records for `.org` are. Further technical description is defined in [RFC 7816](https://datatracker.ietf.org/doc/html/rfc7816).
 
