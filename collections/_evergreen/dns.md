@@ -132,19 +132,19 @@ We can simulate what a browser would do using the [`openssl`](https://en.wikiped
 1. Get the server certificate and use [`sed`](https://en.wikipedia.org/wiki/Sed) to keep just the important part and write it out to a file:
    <pre class=terminal>
    openssl s_client -connect privacyguides.org:443 < /dev/null 2>&1 |
-     sed -n '/-----BEGIN/,/-----END/p' > /tmp/pg_server.cert
+       sed -n '/^-*BEGIN/,/^-*END/p' > /tmp/pg_server.cert
    </pre>
 
 2. Get the intermediate certificate. [Certificate Authorities (CA)](https://en.wikipedia.org/wiki/Certificate_authority) normally don't sign a certificate directly; they use what is known as an "intermediate" certificate.
    <pre class=terminal>
    openssl s_client -showcerts -connect privacyguides.org:443 < /dev/null 2>&1 |
-     sed -n '/-----BEGIN/,/-----END/p' > /tmp/pg_and_intermediate.cert
+       sed -n '/^-*BEGIN/,/^-*END/p' > /tmp/pg_and_intermediate.cert
    </pre>
 
-3. The first certificate in `pg_and_intermediate.cert`, is actually the server certificate from step 1. We can delete that using this [`awk`](https://en.wikipedia.org/wiki/AWK) command:
+3. The first certificate in `pg_and_intermediate.cert`, is actually the server certificate from step 1. We can use `sed` again to delete until the first instance of END:
    <pre class=terminal>
-   awk '$0=="-----BEGIN CERTIFICATE-----" {n++} n>1' \
-     /tmp/pg_and_intermediate.cert > /tmp/intermediate_chain.cert
+   sed -n '/^-*END CERTIFICATE-*$/!d;:a n;p;ba' \
+       /tmp/pg_and_intermediate.cert > /tmp/intermediate_chain.cert
    </pre>
 
 4. Get the OCSP responder for the server certificate:
