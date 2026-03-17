@@ -60,6 +60,26 @@ Popular menstrual trackers like [Flo](https://techcrunch.com/2021/01/13/flo-gets
 
 </details>
 
+### Apple Health
+
+<div class="admonition recommendation" markdown>
+
+![Apple logo](assets/img/health-and-wellness/apple-health.webp#only-light){ align=right }![Apple logo](assets/img/health-and-wellness/apple-health-dark.webp#only-dark){ align=right }
+
+Apple Health is one of the default apps installed on iOS devices. It includes many health and wellness features (see [Health Records](#apple-health-records)), including menstrual cycle tracking. It also uses gender-neutral language. Apple Health always uses end-to-end encryption when syncing across multiple devices. Additionally, almost all measured data is processed on your device.
+
+[:octicons-home-16: Homepage](https://apple.com/health){ .md-button .md-button--primary }
+[:octicons-eye-16:](https://apple.com/legal/privacy/consumer-health-personal-data/en-ww){ .card-link title="Privacy Policy" }
+
+<details class="downloads" markdown>
+<summary>Downloads</summary>
+
+- [:simple-appstore: App Store](https://apps.apple.com/app/apple-health/id1242545199)
+
+</details>
+
+</div>
+
 </div>
 
 ## Fitness Trackers
@@ -72,7 +92,7 @@ These general purpose apps can do everything from counting steps and tracking sl
 
 ![Apple Fitness logo](assets/img/health-and-wellness/apple-fitness.webp){ align=right }
 
-**Apple Fitness** is the default fitness app for iOS. Apple Fitness always uses end-to-end encryption when syncing across multiple devices. Additionally, almost all measured data is processed on your device.
+**Apple Fitness** is the default fitness app for iOS. It shares the security and privacy features of [Apple Health](#apple-health).
 
 [:octicons-eye-16:](https://apple.com/legal/privacy/consumer-health-personal-data/en-ww){ .card-link title="Privacy Policy" }
 
@@ -121,7 +141,7 @@ These apps help you collect and manage personal health data and share it with he
 
 ![Apple logo](assets/img/health-and-wellness/apple-health.webp#only-light){ align=right }![Apple logo](assets/img/health-and-wellness/apple-health-dark.webp#only-dark){ align=right }
 
-**Apple Health Records** is a built-in feature within [Apple Health](https://apple.com/health) that allows you to view, store, and share your health records. It shares the security and privacy features of [Apple Fitness](#apple-fitness).
+**Apple Health Records** is a built-in feature within [Apple Health](#apple-health) that allows you to view, store, and share your health records.
 
 [:octicons-home-16: Homepage](https://apple.com/health){ .md-button .md-button--primary }
 [:octicons-eye-16:](https://apple.com/legal/privacy/consumer-health-personal-data/en-ww){ .card-link title="Privacy Policy" }
