@@ -60,6 +60,8 @@ Popular menstrual trackers like [Flo](https://techcrunch.com/2021/01/13/flo-gets
 
 </details>
 
+</div>
+
 ### Apple Health
 
 <div class="admonition recommendation" markdown>
